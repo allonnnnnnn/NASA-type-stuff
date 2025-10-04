@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar.jsx";  // ✅ Shared Navbar
+import Navbar from "../components/Navbar.jsx";  // Shared Navbar
 
 const Profile = () => {
   const [email, setEmail] = useState("user@example.com");
   const [password, setPassword] = useState("********");
 
   const handleSave = () => {
-    alert("✅ Profile updated! (Connect this to backend later)");
+    alert("Profile updated! (Connect this to backend later)");
   };
 
   return (
