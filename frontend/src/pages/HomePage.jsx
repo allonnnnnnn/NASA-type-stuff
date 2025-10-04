@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar.jsx";  // ✅ Import Navbar
 
 const challenges = [
   "Discover 3 new exoplanets today!",
@@ -32,75 +33,18 @@ const HomePage = () => {
   return (
     <div
       style={{
-        width: "100%", // ✅ FIX: avoid 100vw scroll gap
+        width: "100%",
         height: "100vh",
-        margin: 0,
-        padding: 0,
         background: "radial-gradient(circle at top, #0b0f2f, #000)",
         color: "white",
         display: "flex",
         flexDirection: "column",
-        overflow: "hidden", // ✅ prevents subtle scrollbars
       }}
     >
-      {/* NAVIGATION BAR */}
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "1rem 2rem",
-          background: "rgba(10, 15, 47, 0.9)",
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
-          backdropFilter: "blur(6px)",
-          flexShrink: 0,
-        }}
-      >
-        <h1
-          style={{
-            color: "#00ffff",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            margin: 0,
-            whiteSpace: "nowrap",
-          }}
-        >
-          🚀 Exoplanet Explorer
-        </h1>
+      {/* ✅ Shared Navbar */}
+      <Navbar activePage="Home" />
 
-        <ul
-          style={{
-            display: "flex",
-            listStyle: "none",
-            gap: "1.5rem",
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          <li>
-            <a href="/explore" style={linkStyle}>
-              Explore
-            </a>
-          </li>
-          <li>
-            <a href="/comparison" style={linkStyle}>
-              Comparison
-            </a>
-          </li>
-          <li>
-            <a href="/profile" style={linkStyle}>
-              Profile
-            </a>
-          </li>
-          <li>
-            <a href="/passport" style={linkStyle}>
-              My Passport
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      {/* MAIN CONTENT */}
+      {/* Main Content */}
       <main
         style={{
           flex: 1,
@@ -134,7 +78,7 @@ const HomePage = () => {
           their features, and collect stamps in your cosmic passport.
         </p>
 
-        {/* CHALLENGE OF THE DAY */}
+        {/* Challenge of the Day */}
         <div
           style={{
             background: "rgba(255,255,255,0.08)",
@@ -161,7 +105,7 @@ const HomePage = () => {
         </div>
       </main>
 
-      {/* FOOTER */}
+      {/* Footer */}
       <footer
         style={{
           textAlign: "center",
@@ -169,21 +113,12 @@ const HomePage = () => {
           fontSize: "0.9rem",
           color: "#aaaaaa",
           borderTop: "1px solid rgba(255,255,255,0.1)",
-          flexShrink: 0,
         }}
       >
         © 2025 NASA Exoplanet Explorer | Data from NASA Exoplanet Archive
       </footer>
     </div>
   );
-};
-
-// Shared link style
-const linkStyle = {
-  color: "#00ffff",
-  textDecoration: "none",
-  fontWeight: "500",
-  fontSize: "1rem",
 };
 
 export default HomePage;

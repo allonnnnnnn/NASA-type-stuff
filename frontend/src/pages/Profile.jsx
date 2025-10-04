@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navbar from "../components/Navbar.jsx";  // ✅ Shared Navbar
 
 const Profile = () => {
   const [email, setEmail] = useState("user@example.com");
@@ -19,38 +20,10 @@ const Profile = () => {
         flexDirection: "column",
       }}
     >
-      {/* NAVBAR */}
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "1rem 3rem",
-          background: "rgba(10,15,47,0.9)",
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
-        }}
-      >
-        <h1 style={{ fontSize: "1.8rem", color: "#00ffff", fontWeight: "bold" }}>
-          🚀 Exoplanet Explorer
-        </h1>
+      {/* ✅ Shared Navbar */}
+      <Navbar activePage="Profile" />
 
-        <ul
-          style={{
-            display: "flex",
-            listStyle: "none",
-            gap: "2rem",
-            margin: 0,
-            fontSize: "1.1rem",
-          }}
-        >
-          <li><a href="/explore" style={navLinkStyle}>Explore</a></li>
-          <li><a href="/comparison" style={navLinkStyle}>Comparison</a></li>
-          <li><a href="/profile" style={{ ...navLinkStyle, textDecoration: "underline" }}>Profile</a></li>
-          <li><a href="/passport" style={navLinkStyle}>My Passport</a></li>
-        </ul>
-      </nav>
-
-      {/* MAIN CONTENT */}
+      {/* Main Content */}
       <main
         style={{
           flex: 1,
@@ -71,7 +44,7 @@ const Profile = () => {
             textAlign: "center",
           }}
         >
-          {/* PROFILE PICTURE */}
+          {/* Profile Picture */}
           <div
             style={{
               width: "150px",
@@ -90,7 +63,7 @@ const Profile = () => {
             />
           </div>
 
-          {/* EMAIL FIELD */}
+          {/* Email Field */}
           <div style={{ marginBottom: "1.5rem", textAlign: "left" }}>
             <label style={labelStyle}>Email</label>
             <input
@@ -101,7 +74,7 @@ const Profile = () => {
             />
           </div>
 
-          {/* PASSWORD FIELD */}
+          {/* Password Field */}
           <div style={{ marginBottom: "2rem", textAlign: "left" }}>
             <label style={labelStyle}>Password</label>
             <input
@@ -118,7 +91,7 @@ const Profile = () => {
         </div>
       </main>
 
-      {/* FOOTER */}
+      {/* Footer */}
       <footer
         style={{
           textAlign: "center",
@@ -132,13 +105,6 @@ const Profile = () => {
       </footer>
     </div>
   );
-};
-
-// Shared styles
-const navLinkStyle = {
-  color: "#00ffff",
-  textDecoration: "none",
-  fontWeight: "500",
 };
 
 const labelStyle = {
@@ -171,3 +137,4 @@ const primaryButton = {
 };
 
 export default Profile;
+
