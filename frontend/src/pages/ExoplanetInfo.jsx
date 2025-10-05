@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase"; // adjust path if needed
+import { db } from "../firebase";
 
 function ExoplanetInfo() {
   const { id } = useParams();

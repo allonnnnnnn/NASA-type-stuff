@@ -7,9 +7,9 @@ import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
 import ExoplanetInfo from "./pages/ExoplanetInfo.jsx";
+import ComparisonPage from "./pages/ComparisonPage";
 import Navbar from "./components/Navbar.jsx";
 
-// ✅ Wrapper so we can conditionally show Navbar
 function AppContent() {
   const location = useLocation();
 
@@ -26,6 +26,7 @@ function AppContent() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/exoplanet/:id" element={<ExoplanetInfo />} />
+        <Route path="/compare" element={<ComparisonPage />} />
       </Routes>
     </>
   );

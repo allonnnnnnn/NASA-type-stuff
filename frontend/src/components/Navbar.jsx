@@ -12,7 +12,7 @@ const Navbar = ({ activePage }) => {
         borderBottom: "1px solid rgba(255,255,255,0.1)",
       }}
     >
-      {/* Brand */}
+      {/* brand */}
       <h1
         style={{
           fontSize: "1.8rem",
@@ -39,7 +39,6 @@ const Navbar = ({ activePage }) => {
           (label) => {
             let path;
 
-            // ✅ Correct mapping
             if (label === "Home") path = "/home";
             else path = `/${label.toLowerCase().replace(" ", "")}`;
 
