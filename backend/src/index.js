@@ -14,14 +14,6 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-// Simple API endpoint
-app.get("/api/planets", (req, res) => {
-  res.json([
-    { id: 1, name: "Kepler-22b", temperature: 295, gravity: 1.2 },
-    { id: 2, name: "Gliese 581g", temperature: 270, gravity: 0.8 },
-  ]);
-});
-
 app.post("/api/account", async (req, res) => {
   try {
     const tokenId = req.headers.authorization;
@@ -32,6 +24,7 @@ app.post("/api/account", async (req, res) => {
       email: decoded.email,
       username: username,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      visitedPlanets: {}
     });
 
     res.status(200).json({message: "Success"})
@@ -51,6 +44,33 @@ app.get("/api/account/:uid", async (req, res) => {
 
     res.status(200).json(doc.data());
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/account/:uid/visited", async (req, res) => {
+  try {
+    const tokenId = req.headers.authorization;
+    if (!tokenId) {
+      return res.status(401).json({ error: "Missing auth token" });
+    }
+
+    const decoded = await admin.auth().verifyIdToken(tokenId);
+    const { planetName } = req.body;
+
+    if (!planetName) {
+      return res.status(400).json({ error: "Missing planet name" });
+    }
+
+    const userRef = db.collection("users").doc(decoded.uid);
+
+    await userRef.update({
+      visitedPlanets: admin.firestore.FieldValue.arrayUnion(planetName),
+    });
+
+    res.status(200).json({ message: `${planetName} added to visited planets` });
+  } catch (error) {
+    console.error("Error updating visited planets:", error);
     res.status(500).json({ error: error.message });
   }
 });

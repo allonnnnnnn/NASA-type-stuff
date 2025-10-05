@@ -1,15 +1,71 @@
 import React, { useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
+import { auth } from "../firebase.js"; // your firebase setup
+import { onAuthStateChanged } from "firebase/auth";
 
 const MyPassport = () => {
   const [visitedPlanets, setVisitedPlanets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("visitedPlanets")) || [];
-    setVisitedPlanets(stored);
+    // Listen for auth state changes
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        console.warn("No user logged in.");
+        setVisitedPlanets([]);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const token = await user.getIdToken();
+
+        // Adjust the port if your backend runs on 5000 instead of 3000
+        const response = await fetch(`http://localhost:3000/api/account/${user.uid}`, {
+          method: "GET",
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        const visited = data.visitedPlanets || [];
+        setVisitedPlanets(visited);
+      } catch (err) {
+        console.error("Error loading visited planets:", err);
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    // Clean up subscription when component unmounts
+    return () => unsubscribe();
   }, []);
 
-  // Break visited planets into chunks (4 stamps per page)
+  if (loading) {
+    return (
+      <div
+        style={{
+          color: "white",
+          backgroundColor: "#0b0f2f",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <h2>Loading your passport...</h2>
+      </div>
+    );
+  }
+
+  // Split visited planets into groups of 4 per page
   const chunkedPlanets = [];
   for (let i = 0; i < visitedPlanets.length; i += 4) {
     chunkedPlanets.push(visitedPlanets.slice(i, i + 4));
@@ -19,13 +75,12 @@ const MyPassport = () => {
     <div
       style={{
         minHeight: "100vh",
-        background: "radial-gradient(circle at top, #0b0f2f, #000)", // dark space theme
+        background: "radial-gradient(circle at top, #0b0f2f, #000)",
         display: "flex",
         flexDirection: "column",
         fontFamily: "Arial, sans-serif",
       }}
     >
-      {/* Page Heading */}
       <header
         style={{
           textAlign: "center",
@@ -46,7 +101,6 @@ const MyPassport = () => {
         <p>Flip through your cosmic travel stamps</p>
       </header>
 
-      {/* Flipbook */}
       <main
         style={{
           flex: 1,
@@ -62,9 +116,9 @@ const MyPassport = () => {
           showCover={true}
           style={{
             boxShadow: "0 0 25px rgba(0,255,255,0.2)",
-            borderRadius: "20px",           // rounded passport edges
-            overflow: "hidden",              // clip inner pages to rounded edges
-            background: "#ffffff",           // passport is white
+            borderRadius: "20px",
+            overflow: "hidden",
+            background: "#ffffff",
           }}
         >
           {/* Cover Page */}
@@ -75,7 +129,7 @@ const MyPassport = () => {
             </p>
           </div>
 
-          {/* Stamp Pages */}
+          {/* Planet Stamp Pages */}
           {chunkedPlanets.length === 0 ? (
             <div style={pageStyle}>
               <p
@@ -93,15 +147,11 @@ const MyPassport = () => {
               <div key={idx} style={pageStyle}>
                 <h3 style={pageHeader}>Page {idx + 1}</h3>
                 <div style={stampGrid}>
-                  {group.map((planet, index) => (
+                  {group.map((planetName, index) => (
                     <div key={index} style={stampCard}>
                       <div style={stampCircle}></div>
-                      <h4 style={stampName}>{planet.name}</h4>
-                      <p style={stampInfo}>
-                        {planet.star_name
-                          ? `Star: ${planet.star_name}`
-                          : "Unknown star"}
-                      </p>
+                      <h4 style={stampName}>{planetName}</h4>
+                      <p style={stampInfo}>Visited World</p>
                     </div>
                   ))}
                 </div>
@@ -120,7 +170,6 @@ const MyPassport = () => {
         </HTMLFlipBook>
       </main>
 
-      {/* Footer */}
       <footer
         style={{
           textAlign: "center",
@@ -139,7 +188,7 @@ const MyPassport = () => {
 
 /* ---------- Shared Styles ---------- */
 const pageStyle = {
-  background: "#ffffff",                     // passport pages are white
+  background: "#ffffff",
   border: "1px solid rgba(0,0,0,0.1)",
   borderRadius: "18px",
   padding: "1.5rem",
