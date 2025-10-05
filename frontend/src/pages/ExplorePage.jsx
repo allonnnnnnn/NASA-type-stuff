@@ -115,8 +115,8 @@ const styles = {
   container: {
     backgroundColor: "#0b1120",
     color: "white",
-    minHeight: "100vh",
-    padding: "40px 60px",
+    minHeight: "80vh",
+    padding: "20px 10px",
     fontFamily: "'Inter', sans-serif",
   },
   title: {
@@ -129,7 +129,7 @@ const styles = {
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "25px",
+    gap: "50px",
     justifyItems: "center",
   },
   card: {
@@ -137,7 +137,7 @@ const styles = {
     padding: "25px",
     borderRadius: "15px",
     width: "100%",
-    maxWidth: "270px",
+    maxWidth: "260px",
     textAlign: "center",
     boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
     transition: "transform 0.25s ease, box-shadow 0.25s ease",
