@@ -1,13 +1,27 @@
 import React, { useState } from "react";
+import { auth } from "../firebase.js"
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { redirect, useNavigate } from "react-router-dom"
 
 const Landing = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    alert(`Logging in with ${email}`);
-    // TODO: connect to backend authentication later
+    try {
+      signInWithEmailAndPassword(auth, email, password);
+
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const redirectToSignIn = () =>
+  {
+    navigate("/signup");
+  }
 
   return (
     <div
@@ -140,7 +154,7 @@ const Landing = () => {
             }}
           >
             Don’t have an account?{" "}
-            <span style={{ color: "#00ffff", cursor: "pointer" }}>Sign up</span>
+            <span style={{ color: "#00ffff", cursor: "pointer" }} onClick={redirectToSignIn}>Sign up</span>
           </p>
         </div>
       </div>

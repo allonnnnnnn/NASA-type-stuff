@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/Navbar.jsx";  // ✅ Import Navbar
+import { auth } from "../firebase.js";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import Navbar from "../components/Navbar.jsx";  // Import Navbar
 
 const challenges = [
   "Discover 3 new exoplanets today!",
@@ -12,7 +15,9 @@ const challenges = [
 ];
 
 const HomePage = () => {
+  const [user, setUser] = useState("");
   const [dailyChallenge, setDailyChallenge] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -28,7 +33,17 @@ const HomePage = () => {
       localStorage.setItem("dailyChallengeDate", today);
       localStorage.setItem("dailyChallenge", random);
     }
-  }, []);
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <div
