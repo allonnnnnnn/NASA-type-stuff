@@ -21,7 +21,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const displayName = (passedUser) => {
-    fetch(`http://localhost:5000/api/account/${passedUser.uid}`,
+    fetch(`http://localhost:3000/api/account/${passedUser.uid}`,
       {
         method: "GET"
       }
