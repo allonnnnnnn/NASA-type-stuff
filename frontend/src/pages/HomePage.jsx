@@ -128,7 +128,7 @@ const HomePage = () => {
               marginBottom: "0.5rem",
             }}
           >
-            ⭐ Challenge of the Day
+            Challenge of the Day
           </h3>
           <p style={{ fontSize: "1.1rem", color: "#e0faff" }}>
             {dailyChallenge}

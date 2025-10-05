@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { auth } from "../firebase.js"; // your firebase setup
+import { auth } from "../firebase.js"; 
 import { onAuthStateChanged } from "firebase/auth";
 
 const MyPassport = () => {
@@ -8,7 +8,6 @@ const MyPassport = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         console.warn("No user logged in.");
@@ -20,7 +19,6 @@ const MyPassport = () => {
       try {
         const token = await user.getIdToken();
 
-        // Adjust the port if your backend runs on 5000 instead of 3000
         const response = await fetch(`http://localhost:3000/api/account/${user.uid}`, {
           method: "GET",
           headers: {
@@ -43,7 +41,6 @@ const MyPassport = () => {
       }
     });
 
-    // Clean up subscription when component unmounts
     return () => unsubscribe();
   }, []);
 
@@ -65,7 +62,6 @@ const MyPassport = () => {
     );
   }
 
-  // Split visited planets into groups of 4 per page
   const chunkedPlanets = [];
   for (let i = 0; i < visitedPlanets.length; i += 4) {
     chunkedPlanets.push(visitedPlanets.slice(i, i + 4));
@@ -123,7 +119,7 @@ const MyPassport = () => {
         >
           {/* Cover Page */}
           <div style={coverPageStyle}>
-            <h2 style={coverTitle}>🌌 Exoplanet Explorer Passport</h2>
+            <h2 style={coverTitle}>Exoplanet Explorer Passport</h2>
             <p style={coverSubtitle}>
               A record of the worlds you’ve discovered beyond our solar system.
             </p>
@@ -145,7 +141,6 @@ const MyPassport = () => {
           ) : (
             chunkedPlanets.map((group, idx) => (
               <div key={idx} style={pageStyle}>
-                <h3 style={pageHeader}>Page {idx + 1}</h3>
                 <div style={stampGrid}>
                   {group.map((planetName, index) => (
                     <div key={index} style={stampCard}>
@@ -161,7 +156,7 @@ const MyPassport = () => {
 
           {/* Back Cover */}
           <div style={coverPageStyle}>
-            <h3 style={coverTitle}>🚀 Keep Exploring!</h3>
+            <h3 style={coverTitle}>Keep Exploring!</h3>
             <p style={coverSubtitle}>
               Return to the Explore page to discover more exoplanets and
               collect new stamps.

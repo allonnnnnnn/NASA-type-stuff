@@ -88,10 +88,10 @@ const Landing = () => {
               marginBottom: "2rem",
             }}
           >
-            <li>🪐 Explore real NASA exoplanet data</li>
-            <li>📊 Compare planets by mass, radius, orbit</li>
-            <li>📒 Collect Passport stamps for planets you view</li>
-            <li>⭐ Take on daily challenges to level up your journey</li>
+            <li>Explore real NASA exoplanet data</li>
+            <li>Compare planets by mass, radius, orbit</li>
+            <li>Collect Passport stamps for planets you view</li>
+            <li>Take on daily challenges to level up your journey</li>
           </ul>
         </div>
 
