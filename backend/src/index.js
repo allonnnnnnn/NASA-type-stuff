@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-import serviceAccount from "../nasahackathon-f33a9-firebase-adminsdk-fbsvc-b3f0a9ced3.json" assert { type: "json" };
+import serviceAccount from "../nasahackathon-f33a9-firebase-adminsdk-fbsvc-b3f0a9ced3.json" with { type: "json" };
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
