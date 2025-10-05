@@ -1,4 +1,5 @@
 import React from "react";
+import planetLogo from "../assets/planetLogo.png"; // adjust path as needed
 
 const Navbar = ({ activePage }) => {
   return (
@@ -12,19 +13,34 @@ const Navbar = ({ activePage }) => {
         borderBottom: "1px solid rgba(255,255,255,0.1)",
       }}
     >
-      {/* brand */}
-      <h1
-        style={{
-          fontSize: "1.8rem",
-          color: "#00ffff",
-          fontWeight: "bold",
-          margin: 0,
-        }}
-      >
-        🚀 Exoplanet Explorer
-      </h1>
+      {/* Brand section with logo */}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+        <img
+          src={planetLogo}
+          alt="Exoplanet Explorer Logo"
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            border: "1px solid rgba(0,255,255,0.4)",
+            boxShadow: "0 0 10px rgba(0,255,255,0.2)",
+            objectFit: "cover",
+          }}
+        />
+        <h1
+          style={{
+            fontSize: "1.6rem",
+            color: "#00ffff",
+            fontWeight: "bold",
+            margin: 0,
+            letterSpacing: "0.5px",
+          }}
+        >
+          Exoplanet Explorer
+        </h1>
+      </div>
 
-      {/* Nav Links */}
+      {/* Navigation links */}
       <ul
         style={{
           display: "flex",
@@ -50,6 +66,7 @@ const Navbar = ({ activePage }) => {
                     ...navLinkStyle,
                     textDecoration:
                       activePage === label ? "underline" : "none",
+                    textUnderlineOffset: "4px",
                   }}
                 >
                   {label}
@@ -67,6 +84,7 @@ const navLinkStyle = {
   color: "#00ffff",
   textDecoration: "none",
   fontWeight: "500",
+  transition: "color 0.3s ease",
 };
 
 export default Navbar;
