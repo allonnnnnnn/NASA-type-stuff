@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, limit, startAfter, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  startAfter,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 function ExplorePage() {
   const [exoplanets, setExoplanets] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
-  const [firstDoc, setFirstDoc] = useState(null);
   const [pageHistory, setPageHistory] = useState([]);
   const navigate = useNavigate();
 
-  const pageSize = 60;
+  const pageSize = 20;
 
   useEffect(() => {
     fetchExoplanets();
@@ -35,7 +41,6 @@ function ExplorePage() {
       const fetched = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       setExoplanets(fetched);
-      setFirstDoc(snapshot.docs[0]);
       setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
       if (direction === "next") setPageHistory([...pageHistory, snapshot.docs[0]]);
@@ -44,7 +49,6 @@ function ExplorePage() {
     }
   };
 
-  // 🔹 Add planet to localStorage for comparison
   const handleAddToCompare = (planet) => {
     const stored = JSON.parse(localStorage.getItem("compareList")) || [];
     const alreadyExists = stored.some((item) => item.id === planet.id);
@@ -75,6 +79,16 @@ function ExplorePage() {
             >
               {planet.name}
             </h2>
+            <p style={styles.cardDetail}>
+              <strong>Mass:</strong> {planet.mass}
+            </p>
+            <p style={styles.cardDetail}>
+              <strong>Radius:</strong> {planet.radius}
+            </p>
+            <p style={styles.cardDetail}>
+              <strong>Orbital Period:</strong> {planet.orbital_period}
+            </p>
+
             <button
               style={styles.compareButton}
               onClick={() => handleAddToCompare(planet)}
@@ -99,61 +113,78 @@ function ExplorePage() {
 
 const styles = {
   container: {
-    backgroundColor: "#191970",
+    backgroundColor: "#0b1120",
     color: "white",
     minHeight: "100vh",
-    padding: "30px",
-    fontFamily: "Arial, sans-serif",
+    padding: "40px 60px",
+    fontFamily: "'Inter', sans-serif",
   },
   title: {
     textAlign: "center",
-    fontSize: "2rem",
-    marginBottom: "30px",
+    fontSize: "2.5rem",
+    marginBottom: "40px",
+    color: "#8ab4f8",
+    letterSpacing: "1px",
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-    gap: "20px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "25px",
     justifyItems: "center",
   },
   card: {
-    backgroundColor: "#1E1E3F",
-    padding: "20px",
+    backgroundColor: "#1e293b",
+    padding: "25px",
     borderRadius: "15px",
-    width: "200px",
+    width: "100%",
+    maxWidth: "270px",
     textAlign: "center",
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-    transition: "transform 0.2s ease, background-color 0.2s ease",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+    cursor: "pointer",
   },
   cardTitle: {
-    fontSize: "1.2rem",
-    cursor: "pointer",
-    marginBottom: "10px",
+    fontSize: "1.4rem",
+    marginBottom: "15px",
+    color: "#93c5fd",
+  },
+  cardDetail: {
+    fontSize: "0.95rem",
+    color: "#cbd5e1",
+    margin: "5px 0",
   },
   compareButton: {
-    backgroundColor: "#4169E1",
+    marginTop: "15px",
+    backgroundColor: "#3b82f6",
     color: "white",
     border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
+    padding: "10px 16px",
+    borderRadius: "10px",
     cursor: "pointer",
-    fontSize: "0.9rem",
+    fontSize: "0.95rem",
     transition: "background-color 0.3s ease",
   },
   button: {
-    backgroundColor: "#4169E1",
+    backgroundColor: "#2563eb",
     color: "white",
     border: "none",
-    padding: "10px 20px",
+    padding: "12px 25px",
     borderRadius: "10px",
-    margin: "0 10px",
+    margin: "0 15px",
     cursor: "pointer",
     fontSize: "1rem",
+    transition: "background-color 0.3s ease",
   },
   pagination: {
     textAlign: "center",
-    marginTop: "30px",
+    marginTop: "40px",
   },
+};
+
+// hover effects via inline style injection
+styles.card[":hover"] = {
+  transform: "translateY(-6px)",
+  boxShadow: "0 8px 20px rgba(0,0,0,0.5)",
 };
 
 export default ExplorePage;
