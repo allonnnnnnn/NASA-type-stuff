@@ -40,4 +40,19 @@ app.post("/api/account", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Backend running on port 3001"));
+app.get("/api/account/:uid", async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const doc = await db.collection("users").doc(uid).get();
+
+    if (!doc.exists) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(doc.data());
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.listen(3000, () => console.log("Backend running on port 5000"));
