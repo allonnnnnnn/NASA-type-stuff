@@ -1,16 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import Profile from "./pages/Profile.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
-import ExoplanetInfo from "./pages/ExoPlanetInfo.jsx";
+import ExoplanetInfo from "./pages/ExoplanetInfo.jsx";
+import Navbar from "./components/Navbar.jsx";
 
-function App() {
+// ✅ Wrapper so we can conditionally show Navbar
+function AppContent() {
+  const location = useLocation();
+
   return (
-    <Router>
+    <>
+      {/* Hide Navbar only on the Landing page */}
+      {location.pathname !== "/" && <Navbar />}
+
       <Routes>
         <Route path="/" element={<Landing />} />        {/* Landing first */}
         <Route path="/home" element={<HomePage />} />   {/* Home after login */}
@@ -20,6 +27,14 @@ function App() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/exoplanet/:id" element={<ExoplanetInfo />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

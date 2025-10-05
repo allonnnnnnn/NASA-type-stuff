@@ -37,10 +37,11 @@ const Navbar = ({ activePage }) => {
       >
         {["Home", "Explore", "Comparison", "Profile", "My Passport"].map(
           (label) => {
-            const path =
-              label === "Home"
-                ? "/"
-                : `/${label.toLowerCase().replace(" ", "")}`;
+            let path;
+
+            // ✅ Correct mapping
+            if (label === "Home") path = "/home";
+            else path = `/${label.toLowerCase().replace(" ", "")}`;
 
             return (
               <li key={label}>

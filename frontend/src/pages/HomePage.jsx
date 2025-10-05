@@ -56,8 +56,6 @@ const HomePage = () => {
         flexDirection: "column",
       }}
     >
-      {/* ✅ Shared Navbar */}
-      <Navbar activePage="Home" />
 
       {/* Main Content */}
       <main
