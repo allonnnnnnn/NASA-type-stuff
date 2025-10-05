@@ -26,7 +26,7 @@ function AppContent() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/exoplanet/:id" element={<ExoplanetInfo />} />
-        <Route path="/compare" element={<ComparisonPage />} />
+        <Route path="/comparison" element={<ComparisonPage />} />
       </Routes>
     </>
   );
