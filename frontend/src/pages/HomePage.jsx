@@ -16,8 +16,25 @@ const challenges = [
 
 const HomePage = () => {
   const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
   const [dailyChallenge, setDailyChallenge] = useState("");
   const navigate = useNavigate();
+
+  const displayName = (passedUser) => {
+    fetch(`http://localhost:5000/api/account/${passedUser.uid}`,
+      {
+        method: "GET"
+      }
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json(); // Convert the response to JSON
+    })
+      .then((data) => {
+        setUsername(data.username);
+      })
+  }
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -37,6 +54,7 @@ const HomePage = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        displayName(currentUser);
       } else {
         navigate("/");
       }
@@ -79,7 +97,7 @@ const HomePage = () => {
             textShadow: "0 0 15px rgba(0,255,255,0.6)",
           }}
         >
-          Welcome, Space Explorer!
+          Welcome, {username}!
         </h2>
         <p
           style={{

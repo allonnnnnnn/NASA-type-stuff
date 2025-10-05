@@ -6,7 +6,7 @@ import Profile from "./pages/Profile.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
-import ExoplanetInfo from "./pages/ExoPlanetInfo.jsx";
+import ExoplanetInfo from "./pages/ExoplanetInfo.jsx";
 
 function App() {
   return (
