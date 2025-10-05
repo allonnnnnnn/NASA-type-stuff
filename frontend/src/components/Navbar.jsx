@@ -12,7 +12,7 @@ const Navbar = ({ activePage }) => {
         borderBottom: "1px solid rgba(255,255,255,0.1)",
       }}
     >
-      {/* Brand */}
+      {/* brand */}
       <h1
         style={{
           fontSize: "1.8rem",
@@ -37,10 +37,10 @@ const Navbar = ({ activePage }) => {
       >
         {["Home", "Explore", "Comparison", "Profile", "My Passport"].map(
           (label) => {
-            const path =
-              label === "Home"
-                ? "/"
-                : `/${label.toLowerCase().replace(" ", "")}`;
+            let path;
+
+            if (label === "Home") path = "/home";
+            else path = `/${label.toLowerCase().replace(" ", "")}`;
 
             return (
               <li key={label}>

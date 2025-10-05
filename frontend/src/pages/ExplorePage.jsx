@@ -7,7 +7,7 @@ function ExplorePage() {
   const [exoplanets, setExoplanets] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
   const [firstDoc, setFirstDoc] = useState(null);
-  const [pageHistory, setPageHistory] = useState([]); // to go back pages
+  const [pageHistory, setPageHistory] = useState([]);
   const navigate = useNavigate();
 
   const pageSize = 60;
@@ -44,6 +44,20 @@ function ExplorePage() {
     }
   };
 
+  // 🔹 Add planet to localStorage for comparison
+  const handleAddToCompare = (planet) => {
+    const stored = JSON.parse(localStorage.getItem("compareList")) || [];
+    const alreadyExists = stored.some((item) => item.id === planet.id);
+
+    if (!alreadyExists) {
+      const updated = [...stored, planet];
+      localStorage.setItem("compareList", JSON.stringify(updated));
+      alert(`${planet.name} added to comparison list!`);
+    } else {
+      alert(`${planet.name} is already in your comparison list.`);
+    }
+  };
+
   const handleCardClick = (id) => {
     navigate(`/exoplanet/${id}`);
   };
@@ -54,12 +68,19 @@ function ExplorePage() {
 
       <div style={styles.grid}>
         {exoplanets.map((planet) => (
-          <div
-            key={planet.id}
-            style={styles.card}
-            onClick={() => handleCardClick(planet.id)}
-          >
-            <h2 style={styles.cardTitle}>{planet.name}</h2>
+          <div key={planet.id} style={styles.card}>
+            <h2
+              style={styles.cardTitle}
+              onClick={() => handleCardClick(planet.id)}
+            >
+              {planet.name}
+            </h2>
+            <button
+              style={styles.compareButton}
+              onClick={() => handleAddToCompare(planet)}
+            >
+              + Compare
+            </button>
           </div>
         ))}
       </div>
@@ -78,7 +99,7 @@ function ExplorePage() {
 
 const styles = {
   container: {
-    backgroundColor: "#191970", // midnight blue
+    backgroundColor: "#191970",
     color: "white",
     minHeight: "100vh",
     padding: "30px",
@@ -102,11 +123,22 @@ const styles = {
     width: "200px",
     textAlign: "center",
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-    cursor: "pointer",
     transition: "transform 0.2s ease, background-color 0.2s ease",
   },
   cardTitle: {
     fontSize: "1.2rem",
+    cursor: "pointer",
+    marginBottom: "10px",
+  },
+  compareButton: {
+    backgroundColor: "#4169E1",
+    color: "white",
+    border: "none",
+    padding: "8px 12px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "0.9rem",
+    transition: "background-color 0.3s ease",
   },
   button: {
     backgroundColor: "#4169E1",
@@ -117,7 +149,6 @@ const styles = {
     margin: "0 10px",
     cursor: "pointer",
     fontSize: "1rem",
-    transition: "background-color 0.3s ease",
   },
   pagination: {
     textAlign: "center",

@@ -20,8 +20,6 @@ const Profile = () => {
         flexDirection: "column",
       }}
     >
-      {/* ✅ Shared Navbar */}
-      <Navbar activePage="Profile" />
 
       {/* Main Content */}
       <main
