@@ -35,7 +35,7 @@ function ExoplanetInfo() {
 
       try {
         const token = await user.getIdToken();
-        const response = await fetch(`http://localhost:3000/api/account/${user.uid}`, {
+        const response = await fetch(`https://nasa-type-stuff.onrender.com/api/account/${user.uid}`, {
           method: "GET",
           headers: {
             "Authorization": token,
@@ -65,7 +65,7 @@ function ExoplanetInfo() {
 
       const token = await user.getIdToken();
 
-      const response = await fetch(`http://localhost:3000/api/account/${user.uid}/visited`, {
+      const response = await fetch(`https://nasa-type-stuff.onrender.com/api/account/${user.uid}/visited`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

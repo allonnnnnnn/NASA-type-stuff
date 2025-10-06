@@ -16,7 +16,7 @@ const SignupPage = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const token = await userCredential.user.getIdToken();
 
-      fetch("http://localhost:3000/api/account",
+      fetch("https://nasa-type-stuff.onrender.com/api/account",
         {
           body: JSON.stringify({ username: username }),
           method: "POST",
