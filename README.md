@@ -1,6 +1,6 @@
 # Exoplanet Explorer
 
-Exoplanet Explorer is a web application developed for the NASA Space Apps Hackathon 2025 by a team of four developers: Allan Nguyen, Sophia DiIuvio, Ravneet Rwanda, and Hayden Baek.  
+Exoplanet Explorer is a web application developed for the NASA Space Apps Hackathon 2025 by a team of four developers: Allan Nguyen, Sophia DiIuvio, Ravneet Randhawa, and Hayden Baek.  
 Our goal was to make NASA’s exoplanet data interactive, educational, and engaging for anyone interested in exploring planets beyond our solar system.
 
 **Hosted Link:** [https://nasa-type-stuff.vercel.app](https://nasa-type-stuff.vercel.app)
