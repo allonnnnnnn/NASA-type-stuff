@@ -1,5 +1,6 @@
 import React from "react";
 import planetLogo from "../assets/planetLogo.png"; // adjust path as needed
+import { Link } from "react-router-dom";
 
 const Navbar = ({ activePage }) => {
   return (
@@ -60,8 +61,8 @@ const Navbar = ({ activePage }) => {
 
             return (
               <li key={label}>
-                <a
-                  href={path}
+                <Link
+                  to={path}
                   style={{
                     ...navLinkStyle,
                     textDecoration:
@@ -70,7 +71,7 @@ const Navbar = ({ activePage }) => {
                   }}
                 >
                   {label}
-                </a>
+                </Link>
               </li>
             );
           }
